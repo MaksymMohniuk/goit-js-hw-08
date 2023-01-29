@@ -4,46 +4,23 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 import { galleryItems } from './gallery-items';
 // Change code below this line
 
-console.log(galleryItems);
 function createGalleryMarkup(galleryItems) {
     const markup = galleryItems
       .map(({ preview, original, description }) => {
-        return `<div class="gallery__item">
-      <a class="gallery__link" href="${original}">
-        <img
-          class="gallery__image"
-          src="${preview}"
-          data-source="${original}"
-          alt="${description}"
-        />
-      </a>
-    </div>`;
+        return `<a class="gallery__item" href="${original}">
+      <img class="gallery__image" src="${preview}" alt="${description}" />
+    </a>`;
       })
       .join("");
     return markup;
   }
-  
   const galleryMarkupContainer = document.querySelector(".gallery");
   
   const galleryMarkup = createGalleryMarkup(galleryItems);
   
   galleryMarkupContainer.insertAdjacentHTML("beforeend", galleryMarkup);
   
-  galleryMarkupContainer.addEventListener("click", returnUrlOfBiggestImg);
-  
-  function returnUrlOfBiggestImg(event) {
-    event.preventDefault();
-    if (event.target.nodeName !== "IMG") {
-      return;
-    }
-    const bigImg = basicLightbox.create(`
-       <img src="${event.target.dataset.source}" width="800" height="600">
-    `);
-    bigImg.show();
-  
-    galleryMarkupContainer.addEventListener("keydown", (event) => {
-      if (event.code === "Escape") {
-        bigImg.close();
-      }
-    });
-  }
+  let lightbox = new SimpleLightbox(".gallery a", {
+    captionsData: "alt",
+    captionDelay: 250,
+  });
