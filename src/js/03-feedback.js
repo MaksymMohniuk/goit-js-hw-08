@@ -5,6 +5,7 @@ const input = document.querySelector('.feedback-form input');
 const textarea = document.querySelector('.feedback-form textarea');
 let formData = {};
 const savedValues = localStorage.getItem('feedback-form-state');
+console.log(savedValues);
 const savedDataObject = JSON.parse(savedValues);
 
 form.addEventListener('input', throttle(getUserData, 500));
@@ -25,11 +26,11 @@ function handleSubmit(event) {
     formData = {};
 }
 
-reloadPage();
-
 function reloadPage() {
     if(localStorage.getItem('feedback-form-state')) {
+        formData = localStorage.getItem('feedback-form-state');
         input.value = savedDataObject.email || '';
         textarea.value = savedDataObject.message || '';
     } 
 }
+reloadPage();
