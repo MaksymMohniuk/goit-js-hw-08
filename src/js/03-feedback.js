@@ -23,6 +23,8 @@ function getUserData(event) {
 
 function handleSubmit(event) {
   event.preventDefault();
+  const savedData = JSON.parse(localStorage.getItem('feedback-form-state'));
+  console.log(savedData);
   event.currentTarget.reset();
   localStorage.removeItem('feedback-form-state');
   formData = {};
